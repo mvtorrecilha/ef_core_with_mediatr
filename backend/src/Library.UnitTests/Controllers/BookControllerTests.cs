@@ -1,15 +1,17 @@
 ﻿using FluentAssertions;
 using Library.Api.Controllers;
-using Library.UnitTests.Mocks;
-using Library.UnitTests.Mocks.Repositories;
+using Library.Api.ViewModels;
 using Library.Core.Commands;
 using Library.Core.Common;
 using Library.Core.Helpers;
 using Library.Core.Models;
+using Library.UnitTests.Mocks;
+using Library.UnitTests.Mocks.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +19,7 @@ namespace Library.UnitTests;
 
 public class BookControllerTests
 {
+    protected MockUnitOfWork _mockUnitOfWork;
     protected MockBookRepository _mockBookRepository;
     protected ResponseFormatter _responseFormatterMock;
     protected Notifier _notifier;
@@ -25,6 +28,7 @@ public class BookControllerTests
     public BookControllerTests()
     {
         _mockBookRepository = new MockBookRepository();
+        _mockUnitOfWork = new MockUnitOfWork();
         _notifier = new Notifier();
         _mockMediatr = new MockMediatr();
     }
@@ -33,7 +37,7 @@ public class BookControllerTests
     {
         _responseFormatterMock = new ResponseFormatter(_notifier);
         return new BookController(
-            _mockBookRepository.Object, _responseFormatterMock, _mockMediatr.Object);
+            _mockUnitOfWork.Object, _responseFormatterMock, _mockMediatr.Object);
     }
 
     [Fact]
@@ -60,7 +64,7 @@ public class BookControllerTests
     public void PostBorrowBook_BookNotFound_ThrowException()
     {
         // Arrange
-        Exception exception = new Exception("Book Not found");
+        Exception exception = new("Book Not found");
         _mockMediatr
             .MockSendWithException<BorrowBookCommand>(exception);
 
@@ -82,36 +86,43 @@ public class BookControllerTests
     public async Task GetBooks_ReturnAllBooks()
     {
         //Arrange
-        var bookList = new List<Book>
+        var books = new List<Book>
         {
             new Book
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Author = "Author1",
                 Pages = 0,
                 Publisher = "",
-                Title = "Title1",
-                BookCategoryId = new Guid()
+                Title = "Title1"
             },
             new Book
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Author = "Author2",
                 Pages = 0,
                 Publisher = "",
                 Title = "Title2",
-                BookCategoryId = new Guid()
             }
         };
 
-        _mockBookRepository.MockGetAllBooksAsync(bookList);              
+        _mockBookRepository.MockGetAllBooksNotLentAsync(books);
+        _mockUnitOfWork.MockBooks(_mockBookRepository);
 
         // Act
         var controller = GetController();
         var result = await controller.Get();
 
         // Assert
-        var expected = new OkObjectResult(bookList);
-        result.Should().BeEquivalentTo(expected);
+        var expectedBooks = new OkObjectResult(books.Select(b => new BookViewModel
+        {
+            Author = b.Author,
+            Id = b.Id,
+            Pages = b.Pages,
+            Publisher = b.Publisher,
+            Title = b.Title
+        }));
+
+        result.Should().BeEquivalentTo(expectedBooks);
     }
 }

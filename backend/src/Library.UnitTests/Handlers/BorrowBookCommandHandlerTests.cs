@@ -10,13 +10,16 @@ using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Library.Core.Models;
 
 namespace Library.UnitTests.Handlers;
 
 public class BorrowBookCommandHandlerTests
 {
+    protected MockUnitOfWork _mockUnitOfWork;
     protected MockBookRepository _mockBookRepository;
     protected MockStudentRepository _mockStudentRepository;
+    protected MockBorrowHistoryRepository _mockBorrowHistoryRepository;
     protected ResponseFormatter _responseFormatterMock;
     protected Notifier _notifier;
     protected MockMediatr _mockMediatr;
@@ -24,15 +27,16 @@ public class BorrowBookCommandHandlerTests
 
     public BorrowBookCommandHandlerTests()
     {
+        _mockUnitOfWork = new MockUnitOfWork();
         _mockBookRepository = new MockBookRepository();
         _mockStudentRepository = new MockStudentRepository();
+        _mockBorrowHistoryRepository = new MockBorrowHistoryRepository();
         _notifier = new Notifier();
         _mockMediatr = new MockMediatr();
 
         _handler = new BorrowBookCommandHandler(
             _mockMediatr.Object,
-            _mockBookRepository.Object,
-            _mockStudentRepository.Object,
+            _mockUnitOfWork.Object,
             _notifier);
     }
 
@@ -65,7 +69,8 @@ public class BorrowBookCommandHandlerTests
             StudentEmail = "test@gmail.com"
         };
 
-        _mockStudentRepository.MockIsStudentRegisteredByEmailAsync(command.StudentEmail, false);
+        _mockStudentRepository.MockGetStudentRegisteredByEmailAsync(command.StudentEmail, null);
+        _mockUnitOfWork.MockStudents(_mockStudentRepository);
 
         //Act
         await _handler.Handle(command, default);
@@ -87,9 +92,18 @@ public class BorrowBookCommandHandlerTests
             StudentEmail = "jr@gmail.com"
         };
 
-        _mockStudentRepository.MockIsStudentRegisteredByEmailAsync(command.StudentEmail, true);
-        _mockBookRepository.MockIsValidBookAsync(command.BookId, command.StudentEmail, false);
+        var student = new Student
+        {
+            Id = Guid.NewGuid(),
+            Email = "test@gmail.com"
+        };
 
+        _mockStudentRepository.MockGetStudentRegisteredByEmailAsync(command.StudentEmail, student);
+        _mockUnitOfWork.MockStudents(_mockStudentRepository);
+
+        _mockBookRepository.MockBookBelongToTheCourseCategoryAsync(command.BookId, command.StudentEmail, null);
+        _mockUnitOfWork.MockBooks(_mockBookRepository);
+        
         //Act
         await _handler.Handle(command, default);
 
@@ -101,7 +115,7 @@ public class BorrowBookCommandHandlerTests
     }
 
     [Fact]
-    public async Task HandleBorrowBookCommand_ValidBookAndEmail_ShouldBeSuccess()
+    public async Task HandleBorrowBookCommand_BookIsLent_ShouldHasError()
     {
         // Arrange
         var command = new BorrowBookCommand
@@ -110,17 +124,31 @@ public class BorrowBookCommandHandlerTests
             StudentEmail = "jr@gmail.com"
         };
 
-        _mockStudentRepository.MockIsStudentRegisteredByEmailAsync(command.StudentEmail, true);
-        _mockBookRepository.MockIsValidBookAsync(command.BookId, command.StudentEmail, true);
-        _mockBookRepository.MockBorrowBookAsync(command.BookId, command.StudentEmail);
-        _mockMediatr.MockPublish<BorrowedBookNotification>();
+        var student = new Student
+        {
+            Id = Guid.NewGuid(),
+            Email = "test@gmail.com"
+        };
+
+        _mockStudentRepository.MockGetStudentRegisteredByEmailAsync(command.StudentEmail, student);
+        _mockUnitOfWork.MockStudents(_mockStudentRepository);
+
+        var lentBook = new Book
+        {
+            Id = Guid.NewGuid(),
+            IsLent = true
+        };
+
+        _mockBookRepository.MockBookBelongToTheCourseCategoryAsync(command.BookId, command.StudentEmail, lentBook);
+        _mockUnitOfWork.MockBooks(_mockBookRepository);
 
         //Act
         await _handler.Handle(command, default);
 
         // Assert
-        _notifier.HasError.Should().BeFalse();
-        _mockBookRepository.VerifyBorrowBookAsync(command.BookId, command.StudentEmail, Times.Once());
-        _mockMediatr.VerifyPublish<BorrowedBookNotification>(Times.Once());
+        string expectedError = Errors.BookAlreadyLent;
+        _notifier.HasError.Should().BeTrue();
+        _notifier.Errors.Should().ContainSingle()
+            .Which.Message.Should().Be(expectedError);
     }
 }

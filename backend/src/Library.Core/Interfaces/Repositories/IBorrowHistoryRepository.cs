@@ -6,5 +6,4 @@ namespace Library.Core.Interfaces.Repositories;
 
 public interface IBorrowHistoryRepository : IBaseRepository<BorrowHistory>
 {
-    Task BorrowBookAsync(Guid id, string studentEmail);
 }

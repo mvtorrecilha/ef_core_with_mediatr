@@ -55,7 +55,7 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
         {
             StudentId = studentId,
             BookId = bookId,
-            BorrowDate = DateTime.Now
+           // BorrowDate = DateTime.Now
         };
 
         var book =  await _unitOfWork.Books.GetByIdAsync(bookId);

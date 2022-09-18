@@ -3,7 +3,6 @@ using Library.Core.Models;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Library.UnitTests.Mocks.Repositories;
 
@@ -11,38 +10,38 @@ public class MockBookRepository : Mock<IBookRepository>
 {
     public MockBookRepository() : base(MockBehavior.Strict) { }
 
-    public MockBookRepository MockGetAllBooksAsync(List<Book> output)
+    public MockBookRepository MockGetAllBooksNotLentAsync(List<Book> output)
     {
-        Setup(m => m.GetAllBooksAsync())
+        Setup(b => b.GetAllBooksNotLentAsync())
             .ReturnsAsync(output);
 
         return this;
     }
 
-    public MockBookRepository MockIsValidBookAsync(Guid id, string studentEmail, bool output)
+    public MockBookRepository MockGetByIdAsync(Guid id, Book output)
     {
-        Setup(s => s.IsValidBookAsync(id, studentEmail)).ReturnsAsync(output);
+        Setup(b => b.GetByIdAsync(id)).ReturnsAsync(output);
 
         return this;
     }
 
-    public MockBookRepository MockBorrowBookAsync(Guid id, string studentEmail)
+    public MockBookRepository MockUpdate(Book input)
     {
-        Setup(s => s.BorrowBookAsync(id, studentEmail)).Returns(Task.CompletedTask);
+        Setup(b => b.Update(input));
 
         return this;
     }
 
-    public MockBookRepository VerifyIsValidBookAsync(Guid id, string studentEmail, Times times)
+    public MockBookRepository MockBookBelongToTheCourseCategoryAsync(Guid id, string studentEmail, Book output)
     {
-        Verify(s => s.IsValidBookAsync(id, studentEmail), times);
+        Setup(b => b.BookBelongToTheCourseCategoryAsync(id, studentEmail)).ReturnsAsync(output);
 
         return this;
     }
 
-    public MockBookRepository VerifyBorrowBookAsync(Guid id, string studentEmail, Times times)
+    public MockBookRepository VerifyBookBelongToTheCourseCategoryAsync(Guid id, string studentEmail, Times times)
     {
-        Verify(s => s.BorrowBookAsync(id, studentEmail), times);
+        Verify(s => s.BookBelongToTheCourseCategoryAsync(id, studentEmail), times);
 
         return this;
     }

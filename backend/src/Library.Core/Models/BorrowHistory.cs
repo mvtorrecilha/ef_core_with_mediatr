@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Library.Core.Models;
 
 [Table("BorrowHistory")]
-public class BorrowHistory : BaseEntity
+public class BorrowHistory
 {
     public Guid BookId { get; set; }
 

@@ -1,14 +1,9 @@
-using Library.Repository;
 using Library.Repository.Context;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library.Api;
 
@@ -38,16 +33,4 @@ public class Program
             {
                 webBuilder.UseStartup<Startup>();
             });
-
-    private static IConfiguration GetConfiguration()
-    {
-        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
-
-        return new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
-    }
 }

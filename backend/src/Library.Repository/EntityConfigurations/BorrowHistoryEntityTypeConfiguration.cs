@@ -14,11 +14,6 @@ public class BorrowHistoryEntityTypeConfiguration : IEntityTypeConfiguration<Bor
 
         builder.ToTable("BorrowHistory");
 
-        builder
-            .HasKey(s => s.Id)
-            .IsClustered(false)
-            .HasName("PK_BorrowHistory");
-
         builder.HasOne(bh => bh.Book)
             .WithMany(b => b.BorrowHistories)
             .HasForeignKey(bh => bh.BookId)
