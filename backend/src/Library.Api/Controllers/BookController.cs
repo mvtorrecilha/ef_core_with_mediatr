@@ -1,9 +1,11 @@
-﻿using Library.Core.Commands;
+﻿using Library.Api.ViewModels;
+using Library.Core.Commands;
 using Library.Core.Helpers;
 using Library.Core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers;
@@ -32,7 +34,14 @@ public class BookController : ControllerBase
     {
         var books = await _unitOfWork.Books.GetAllBooksNotLentAsync();
 
-        return Ok(books);
+        return Ok(books.Select(b => new BookViewModel()
+        {
+            Author = b.Author,
+            Id = b.Id,
+            Pages = b.Pages,
+            Publisher = b.Publisher,
+            Title = b.Title
+        }));
     }
 
     [HttpPost]

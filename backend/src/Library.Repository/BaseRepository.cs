@@ -28,6 +28,16 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
+    public async Task<IEnumerable<T>> GetAllWithIncludes(params Expression<Func<T, Object>>[] includes)
+    {
+        IQueryable<T> query = _context.Set<T>();
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+        return await query.ToListAsync();
+    }
+
     public async Task<T> GetByIdAsync(Guid id)
     {
         return await _context.Set<T>().FindAsync(id);
