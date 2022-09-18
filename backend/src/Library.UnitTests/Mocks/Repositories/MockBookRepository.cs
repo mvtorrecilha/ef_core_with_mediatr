@@ -45,4 +45,11 @@ public class MockBookRepository : Mock<IBookRepository>
 
         return this;
     }
+
+    public MockBookRepository VerifyUpdate(Book input, Times times)
+    {
+        Verify(s => s.Update(input), times);
+
+        return this;
+    }
 }

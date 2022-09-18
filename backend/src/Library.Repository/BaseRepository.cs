@@ -28,7 +28,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<IEnumerable<T>> GetAllWithIncludes(params Expression<Func<T, Object>>[] includes)
+    public async Task<IEnumerable<T>> GetAllWithIncludes(params Expression<Func<T, object>>[] includes)
     {
         IQueryable<T> query = _context.Set<T>();
         foreach (var include in includes)

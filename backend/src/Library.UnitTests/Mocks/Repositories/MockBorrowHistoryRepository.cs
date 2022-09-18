@@ -1,6 +1,7 @@
 ﻿using Library.Core.Interfaces.Repositories;
 using Library.Core.Models;
 using Moq;
+using System.Threading.Tasks;
 
 namespace Library.UnitTests.Mocks.Repositories
 {
@@ -8,9 +9,10 @@ namespace Library.UnitTests.Mocks.Repositories
     {
         public MockBorrowHistoryRepository() : base(MockBehavior.Strict) { }
 
-        public MockBorrowHistoryRepository MockAddAsync(BorrowHistory input)
+        public MockBorrowHistoryRepository MockAddAsync()
         {
-            Setup(bh => bh.AddAsync(input));
+            Setup(bh => bh.AddAsync(It.IsAny<BorrowHistory>()))
+                .Returns(Task.CompletedTask);
 
             return this;
         }

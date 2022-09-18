@@ -25,7 +25,7 @@ public class MockStudentRepository : Mock<IStudentRepository>
         return this;
     }
 
-    public MockStudentRepository MockGetAllWithIncludes1(Expression<Func<Student, Object>>[] includes, IEnumerable<Student> output)
+    public MockStudentRepository MockGetAllWithIncludes1(Expression<Func<Student, object>>[] includes, IEnumerable<Student> output)
     {
         Setup(s => s.GetAllWithIncludes(includes)).ReturnsAsync(output);
 
@@ -34,7 +34,7 @@ public class MockStudentRepository : Mock<IStudentRepository>
 
     public MockStudentRepository MockGetAllWithIncludes(IEnumerable<Student> output)
     {
-        Setup(s => s.GetAllWithIncludes(It.IsAny<Expression<Func<Student, Object>>>())).ReturnsAsync(output);
+        Setup(s => s.GetAllWithIncludes(It.IsAny<Expression<Func<Student, object>>>())).ReturnsAsync(output);
 
         return this;
     }

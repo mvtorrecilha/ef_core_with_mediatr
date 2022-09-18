@@ -151,4 +151,50 @@ public class BorrowBookCommandHandlerTests
         _notifier.Errors.Should().ContainSingle()
             .Which.Message.Should().Be(expectedError);
     }
+
+    [Fact]
+    public async Task HandleBorrowBookCommand_ValidBookAndEmail_ShouldBeSuccess()
+    {
+        // Arrange
+        var command = new BorrowBookCommand
+        {
+            BookId = Guid.Parse("762141A7-ACA3-4919-9ACD-3FC86815F05B"),
+            StudentEmail = "domain@domain.com"
+        };
+
+        var student = new Student
+        {
+            Id = Guid.Parse("162141A7-ACA3-4919-9ACD-3FC86815F05B"),
+            Email = command.StudentEmail
+        };
+
+        _mockStudentRepository.MockGetStudentRegisteredByEmailAsync(command.StudentEmail, student);
+        _mockUnitOfWork.MockStudents(_mockStudentRepository);
+
+        var bookToBorrow = new Book
+        {
+            Id = command.BookId,
+            IsLent = false
+        };
+
+        _mockBorrowHistoryRepository.MockAddAsync();
+        _mockUnitOfWork.MockBorrowHistories(_mockBorrowHistoryRepository);
+        _mockBookRepository.MockBookBelongToTheCourseCategoryAsync(command.BookId, command.StudentEmail, bookToBorrow);
+        _mockBookRepository.MockGetByIdAsync(command.BookId, bookToBorrow);
+        _mockBookRepository.MockUpdate(bookToBorrow);
+        _mockUnitOfWork.MockBooks(_mockBookRepository);
+        _mockUnitOfWork.MockComplete(1);
+        _mockMediatr.MockPublish<BorrowedBookNotification>();
+
+        //Act
+        await _handler.Handle(command, default);
+
+        // Assert
+        _notifier.HasError.Should().BeFalse();
+        _mockBookRepository
+            .VerifyBookBelongToTheCourseCategoryAsync(command.BookId, command.StudentEmail, Times.Once());
+        _mockBookRepository
+           .VerifyUpdate(bookToBorrow, Times.Once());
+        _mockMediatr.VerifyPublish<BorrowedBookNotification>(Times.Once());
+    }
 }
