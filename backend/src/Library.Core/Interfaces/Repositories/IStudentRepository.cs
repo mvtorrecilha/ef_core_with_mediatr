@@ -5,5 +5,5 @@ namespace Library.Core.Interfaces.Repositories;
 
 public interface IStudentRepository : IBaseRepository<Student>
 {
-    Task<bool> IsStudentRegisteredByEmailAsync(string studentEmail);
+    Task<Student> GetStudentRegisteredByEmailAsync(string studentEmail);
 }

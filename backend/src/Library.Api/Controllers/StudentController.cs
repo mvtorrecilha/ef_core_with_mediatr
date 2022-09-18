@@ -1,4 +1,4 @@
-﻿using Library.Core.Interfaces.Repositories;
+﻿using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,11 +9,11 @@ namespace Library.Api.Controllers;
 [Route("[controller]")]
 public class StudentController : ControllerBase
 {
-    private readonly IStudentRepository _studentRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public StudentController(IStudentRepository studentRepository)
+    public StudentController(IUnitOfWork unitOfWork)
     {
-        _studentRepository = studentRepository;
+        _unitOfWork = unitOfWork;
     }
 
     [HttpGet]
@@ -21,7 +21,7 @@ public class StudentController : ControllerBase
     [Route("/api/students")]
     public async Task<IActionResult> Get()
     {
-        var students = await _studentRepository.GetAllAsync();
+        var students = await _unitOfWork.Students.GetAllAsync();
 
         return Ok(students);
     }

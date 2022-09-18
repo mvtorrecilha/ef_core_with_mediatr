@@ -7,7 +7,6 @@ namespace Library.Core.Interfaces.Repositories;
 
 public interface IBookRepository : IBaseRepository<Book>
 {
-    Task<IEnumerable<Book>> GetAllBooksAsync();
-    Task BorrowBookAsync(Guid id, string studentEmail);
-    Task<bool> IsValidBookAsync(Guid id, string studentEmail);
+    Task<IEnumerable<Book>> GetAllBooksNotLentAsync();
+    Task<Book> BookBelongToTheCourseCategoryAsync(Guid id, string studentEmail);
 }

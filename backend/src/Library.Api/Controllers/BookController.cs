@@ -1,6 +1,6 @@
 ﻿using Library.Core.Commands;
 using Library.Core.Helpers;
-using Library.Core.Interfaces.Repositories;
+using Library.Core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +12,15 @@ namespace Library.Api.Controllers;
 [Route("[controller]")]
 public class BookController : ControllerBase
 {
-    private readonly IBookRepository _bookRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IResponseFormatter _responseFormatter;
     private readonly IMediator _mediator;
 
-    public BookController(IBookRepository bookRepository,
+    public BookController(IUnitOfWork unitOfWork,
                           IResponseFormatter responseFormatter,
                           IMediator mediator)
     {
-        _bookRepository = bookRepository;
+        _unitOfWork = unitOfWork;
         _responseFormatter = responseFormatter;
         _mediator = mediator;
     }
@@ -30,7 +30,7 @@ public class BookController : ControllerBase
     [Route("/api/books")]
     public async Task<IActionResult> Get()
     {
-        var books = await _bookRepository.GetAllBooksAsync();
+        var books = await _unitOfWork.Books.GetAllBooksNotLentAsync();
 
         return Ok(books);
     }

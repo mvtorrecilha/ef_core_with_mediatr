@@ -1,10 +1,14 @@
 using Library.Repository;
+using Library.Repository.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Api;
 
@@ -12,13 +16,17 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var configs = GetConfiguration();
         var host = CreateHostBuilder(args).Build();
 
-        if (args.Contains("seed"))
+        using (var scope = host.Services.CreateScope())
         {
-            DatabaseBootstrap bookRepository = new DatabaseBootstrap(configs.GetConnectionString("DefaultConnection"));
-            bookRepository.Setup().Wait();
+            var logger = scope.ServiceProvider.GetService<ILogger<LibraryContextSeed>>();
+            var db = scope.ServiceProvider.GetRequiredService<LibraryContext>();
+            db.Database.Migrate();
+
+            new LibraryContextSeed()
+                     .SeedAsync(db, logger)
+                     .Wait();
         }
 
         host.Run(); 

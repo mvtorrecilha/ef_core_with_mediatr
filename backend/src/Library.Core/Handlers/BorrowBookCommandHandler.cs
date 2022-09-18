@@ -1,6 +1,7 @@
 ﻿using Library.Core.Commands;
 using Library.Core.Common;
-using Library.Core.Interfaces.Repositories;
+using Library.Core.Interfaces;
+using Library.Core.Models;
 using Library.Core.Notifications;
 using MediatR;
 using System;
@@ -14,19 +15,17 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
 {
     private readonly IMediator _mediator;
     private readonly INotifier _notifier;
-    private readonly IBookRepository _bookRepository;
-    private readonly IStudentRepository _studentRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private Guid studentId { get; set; }
 
     public BorrowBookCommandHandler(
         IMediator mediator,
-        IBookRepository bookRepository,
-        IStudentRepository studentRepository,
+        IUnitOfWork unitOfWork,
         INotifier notifier)
     {
         _mediator = mediator;
-        _bookRepository = bookRepository;
+        _unitOfWork = unitOfWork;
         _notifier = notifier;
-        _studentRepository = studentRepository;
     }
 
     public async Task<Unit> Handle(BorrowBookCommand request, CancellationToken cancellationToken)
@@ -36,7 +35,11 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
             return Unit.Value;
         }
 
-        await _bookRepository.BorrowBookAsync(request.BookId, request.StudentEmail);
+        if(await BorrowABook(request.BookId, studentId) <= 0)
+        {
+            return Unit.Value;
+        }
+
         await _mediator.Publish(new BorrowedBookNotification
         {
             BookId = request.BookId,
@@ -44,6 +47,22 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
         }, cancellationToken);
 
         return Unit.Value;
+    }
+
+    private async Task<int> BorrowABook(Guid bookId, Guid studentId)
+    {
+        var bookToBorrow = new BorrowHistory
+        {
+            StudentId = studentId,
+            BookId = bookId,
+            BorrowDate = DateTime.Now
+        };
+
+        var book =  await _unitOfWork.Books.GetByIdAsync(bookId);
+        book.IsLent = true;
+        _unitOfWork.Books.Update(book);
+        await _unitOfWork.BorrowHistories.AddAsync(bookToBorrow);
+        return _unitOfWork.Complete();
     }
 
     private async Task<bool> IsValidToBorrowABook(BorrowBookCommand request)
@@ -55,16 +74,26 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
             return false;
         }
 
-        if (!await _studentRepository.IsStudentRegisteredByEmailAsync(request.StudentEmail))
+        var studentRegistered = await _unitOfWork.Students.GetStudentRegisteredByEmailAsync(request.StudentEmail);
+        if (studentRegistered is null)
         {
             _notifier.AddError("Email", Errors.StudentNotFound, request.StudentEmail);
             _notifier.SetStatuCode(HttpStatusCode.NotFound);
             return false;
         }
 
-        if (!await _bookRepository.IsValidBookAsync(request.BookId, request.StudentEmail))
+        studentId = studentRegistered.Id;
+        var bookBelongToTheCourseCategory = await _unitOfWork.Books.BookBelongToTheCourseCategoryAsync(request.BookId, request.StudentEmail);
+        if (bookBelongToTheCourseCategory is null)
         {
             _notifier.AddError("Id", Errors.TheBookDoesNotBelongToTheCourseCategory, request.BookId);
+            _notifier.SetStatuCode(HttpStatusCode.Forbidden);
+            return false;
+        }
+
+        if (bookBelongToTheCourseCategory.IsLent)
+        {
+            _notifier.AddError("Id", Errors.BookAlreadyLent, request.BookId);
             _notifier.SetStatuCode(HttpStatusCode.Forbidden);
             return false;
         }

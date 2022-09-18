@@ -20,6 +20,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddSqlData(Configuration);
         NativeInjectorBootStrapper.RegisterServices(services);
         services.AddControllers();
         services.AddCorsConfig();

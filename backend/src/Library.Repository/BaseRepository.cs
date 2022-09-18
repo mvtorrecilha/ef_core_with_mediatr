@@ -1,74 +1,65 @@
-﻿using Dapper.Contrib.Extensions;
-using Library.Core.Interfaces.Factories;
-using Library.Core.Interfaces.Repositories;
-using Library.Core.Models;
-using Polly;
-using Polly.Retry;
+﻿using Library.Core.Interfaces.Repositories;
+using Library.Repository.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Library.Repository;
 
-public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+public class BaseRepository<T> : IBaseRepository<T> where T : class
 {
-    protected readonly IConnectionFactory _connectionFactory;
+    protected readonly LibraryContext _context;
 
-    public BaseRepository(IConnectionFactory connectionFactory)
+    public BaseRepository(LibraryContext context)
     {
-        _connectionFactory = connectionFactory;
+        _context = context;
     }
 
-    public virtual async Task AddAsync(TEntity entity)
+    public async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate)
     {
-        await CreatePolicy().ExecuteAsync(async () =>
-        {
-            using var connection = _connectionFactory.GetOpenConnection();
-            await connection.InsertAsync(entity);
-        });
+        return await _context.Set<T>().Where(predicate).ToListAsync();
     }
 
-    public virtual async Task DeleteAsync(TEntity entity)
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
-        await CreatePolicy().ExecuteAsync(async () =>
-        {
-            using var connection = _connectionFactory.GetOpenConnection();
-            await connection.DeleteAsync(entity);
-        });
+        return await _context.Set<T>().ToListAsync();
     }
 
-    public virtual async Task<TEntity> GetAsync(Guid id)
+    public async Task<T> GetByIdAsync(Guid id)
     {
-        return await CreatePolicy().ExecuteAsync(async () =>
-        {
-            using var connection = _connectionFactory.GetOpenConnection();
-            return await connection.GetAsync<TEntity>(id);
-        });
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    public async Task<T> FindByAsync(Expression<Func<T, bool>> predicate)
     {
-        return await CreatePolicy().ExecuteAsync(async () =>
-        {
-            using var connection = _connectionFactory.GetOpenConnection();
-            return await connection.GetAllAsync<TEntity>();
-        });
+        return await _context.Set<T>().FirstOrDefaultAsync(predicate);
     }
 
-    public virtual async Task UpdateAsync(TEntity entity)
+    public async Task AddAsync(T entity)
     {
-        await CreatePolicy().ExecuteAsync(async () =>
-        {
-            using var connection = _connectionFactory.GetOpenConnection();
-            await connection.UpdateAsync(entity);
-        });
+        await _context.Set<T>().AddAsync(entity);
     }
 
-    protected AsyncRetryPolicy CreatePolicy(int retries = 5) =>
-        Policy
-            .Handle<SqlException>()
-            .WaitAndRetryAsync(
-                retryCount: retries,
-                sleepDurationProvider: retry => TimeSpan.FromMilliseconds(new Random().Next(1, 300)));
+    public void Update(T entity)
+    {
+        _context.Set<T>().Update(entity);
+    }
+
+    public void AddRange(IEnumerable<T> entities)
+    {
+        _context.Set<T>().AddRange(entities);
+    }
+
+    public void Remove(T entity)
+    {
+        _context.Set<T>().Remove(entity);
+    }
+
+    public void RemoveRange(IEnumerable<T> entities)
+    {
+        _context.Set<T>().RemoveRange(entities);
+    }
 }

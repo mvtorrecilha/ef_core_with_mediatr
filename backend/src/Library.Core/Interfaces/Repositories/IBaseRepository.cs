@@ -1,19 +1,19 @@
-﻿using Library.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Library.Core.Interfaces.Repositories;
 
-public interface IBaseRepository<TEntity> where TEntity : BaseEntity
+public interface IBaseRepository<T> where T : class
 {
-    Task<TEntity> GetAsync(Guid id);
-
-    Task<IEnumerable<TEntity>> GetAllAsync();
-
-    Task AddAsync(TEntity entity);
-
-    Task DeleteAsync(TEntity entity);
-
-    Task UpdateAsync(TEntity entity);
+    Task<T> GetByIdAsync(Guid id);
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate);
+    Task<T> FindByAsync(Expression<Func<T, bool>> predicate);
+    Task AddAsync(T entity);
+    void AddRange(IEnumerable<T> entities);
+    void Update(T entity);
+    void Remove(T entity);
+    void RemoveRange(IEnumerable<T> entities);
 }

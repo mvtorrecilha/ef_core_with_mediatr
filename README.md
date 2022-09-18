@@ -1,11 +1,11 @@
-# Library API
+# Library EF Core API
 
 This project aims to control the borrowing of books from a fictional library.
 
 ## Technologies implemented:
 
 - ASP.NET Core 6.0 (Migrated from ASP.NET Core 3.1 to ASP.NET Core 6.0)
-- Dapper
+- Entity Framework Core
 - MediatR
 - Swagger
 
@@ -28,11 +28,9 @@ With all these tools installed, run the following commands in your operating sys
 ## Usage
 
 ```
-dotnet run --project .\backend\src\Library.Api\Library.Api.csproj -- seed
+dotnet run --project .\backend\src\Library.Api\Library.Api.csproj
 ```
-This command will run the site on url "https://localhost:5001" and the database will already be created with some data already inserted. You can check the data in the **DatabaseBoostrp.cs** file.
-
-**Note: Every time you execute this command the data in the tables will be deleted. To not erase the data, just remove the argument "-- seed"**
+This command will run the site on url "https://localhost:5001" and the database will already be created with some data already inserted by migration.
 
 ## Run the tests
 

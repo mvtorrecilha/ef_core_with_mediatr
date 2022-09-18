@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Core.Models;
 
-[Table("Course")]
-public class Course : BaseEntity
+[Table("Category")]
+public class Category : BaseEntity
 {
     public string Name { get; set; }
 
-    public ICollection<Student> Students { get; set; }
+    public ICollection<Book> Books { get; set; }
 
     public ICollection<CourseCategory> CourseCategories { get; set; }
-
 }

@@ -1,11 +1,12 @@
-﻿using Library.Core.Interfaces.Factories;
-using Library.Core.Interfaces.Repositories;
+﻿using Library.Core.Interfaces.Repositories;
 using Library.Core.Models;
+using Library.Repository.Context;
 
 namespace Library.Repository;
 
 public class CourseRepository : BaseRepository<Course>, ICourseRepository
 {
-    public CourseRepository(IConnectionFactory connectionFactory)
-       : base(connectionFactory) { }
+    public CourseRepository(LibraryContext context) : base(context)
+    {
+    }
 }

@@ -2,10 +2,9 @@
 using Library.Core.Common;
 using Library.Core.Handlers;
 using Library.Core.Helpers;
-using Library.Core.Interfaces.Factories;
+using Library.Core.Interfaces;
 using Library.Core.Interfaces.Repositories;
 using Library.Repository;
-using Library.Repository.Factories;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,19 +17,19 @@ public class NativeInjectorBootStrapper
         //Repositories
         services.AddScoped(typeof(IBookRepository), typeof(BookRepository));
         services.AddScoped(typeof(IStudentRepository), typeof(StudentRepository));
-        services.AddScoped(typeof(IBookCategoryRepository), typeof(BookCategoryRepository));
         services.AddScoped(typeof(ICourseRepository), typeof(CourseRepository));
+        services.AddScoped(typeof(IBorrowHistoryRepository), typeof(BorrowHistoryRepository));  
 
         //Services
         services.AddScoped(typeof(INotifier), typeof(Notifier));
-
-        //Factories
-        services.AddSingleton(typeof(IConnectionFactory), typeof(ConnectionFactory));
 
         //ResponseFormatter
         services.AddScoped(typeof(IResponseFormatter), typeof(ResponseFormatter));
 
         //Mediatr
         services.AddScoped<IRequestHandler<BorrowBookCommand, Unit>, BorrowBookCommandHandler>();
+
+        //Unit of Work
+        services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
     }
 }
