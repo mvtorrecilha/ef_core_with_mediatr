@@ -23,7 +23,7 @@ public class StudentController : ControllerBase
     [Route("/api/students")]
     public async Task<IActionResult> Get()
     {
-        var students = await _unitOfWork.Students.GetAllWithIncludes(s => s.Course);
+        var students = await _unitOfWork.Students.GetAllStudentsWithCourseAsync();
 
         return Ok(students.Select(s => new StudentViewModel()
         {

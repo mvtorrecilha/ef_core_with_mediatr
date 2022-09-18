@@ -60,7 +60,7 @@ namespace Library.UnitTests.Controllers
                 },
              };
 
-            _mockStudentRepository.MockGetAllWithIncludes(students);
+            _mockStudentRepository.MockGetAllStudentsWithCourseAsync(students);
             _mockUnitOfWork.MockStudents(_mockStudentRepository);
 
             // Act
