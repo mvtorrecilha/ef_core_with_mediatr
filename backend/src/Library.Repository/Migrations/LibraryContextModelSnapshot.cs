@@ -135,9 +135,6 @@ namespace Library.Repository.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CourseId", "CategoryId");
 
                     b.HasIndex("CategoryId");

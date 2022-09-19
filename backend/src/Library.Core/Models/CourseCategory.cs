@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Library.Core.Models;
 
 [Table("CourseCategory")]
-public class CourseCategory : BaseEntity
+public class CourseCategory
 {
     public Guid CourseId { get; set; }
 
