@@ -78,8 +78,8 @@ public class BookControllerTests
         Func<Task> action = async () => await controller.Post(request);
 
         // Assert
-        var exception2 = action.Should().ThrowAsync<Exception>();
-        exception2.WithMessage("Book Not found");    
+        var expectedException = action.Should().ThrowAsync<Exception>();
+        expectedException.WithMessage("Book Not found");    
     }
 
     [Fact]
