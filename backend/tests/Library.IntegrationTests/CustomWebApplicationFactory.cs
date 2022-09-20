@@ -23,24 +23,20 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<Progr
 
             var sp = services.BuildServiceProvider();
 
-            using (var scope = sp.CreateScope())
+            using var scope = sp.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            var appDb = scopedServices.GetRequiredService<LibraryContext>();
+
+            var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
+            appDb.Database.EnsureCreated();
+
+            try
             {
-                var scopedServices = scope.ServiceProvider;
-                var appDb = scopedServices.GetRequiredService<LibraryContext>();
-
-                var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
-                appDb.Database.EnsureCreated();
-
-                try
-                {
-                    new LibraryContextTestSeed()
-                         .SeedAsync(appDb)
-                         .Wait();
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "An error occurred while seeding the database with test messages. Error: {ex.Message}", ex.Message);
-                }
+                 LibraryContextTestSeed.SeedAsync(appDb).Wait();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while seeding the database with test messages. Error: {ex.Message}", ex.Message);
             }
         });
     }

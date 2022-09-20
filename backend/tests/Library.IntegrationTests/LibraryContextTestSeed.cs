@@ -5,7 +5,7 @@ namespace Library.IntegrationTests;
 
 public class LibraryContextTestSeed
 {
-    public async Task SeedAsync(
+    public static async Task SeedAsync(
        LibraryContext context)
     {
         await SeedDefaultCourseCategory(context);
