@@ -12,7 +12,7 @@ RUN dotnet publish "./src/Library.Api/Library.Api.csproj" -c release -o /app --n
 
 # Unit Test
 FROM build AS unittest
-WORKDIR /backend/src/Library.UnitTests
+WORKDIR /backend/tests/Library.UnitTests
 CMD ["dotnet", "test"]
 
 # Integration Test
