@@ -70,7 +70,7 @@ public class BookControllerTests
 
         var request = new BorrowBookCommand
         {
-            BookId = Guid.NewGuid()
+            StudentEmail = "student_@dns.com"
         };
 
         // Act
