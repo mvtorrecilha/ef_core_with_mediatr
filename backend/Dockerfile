@@ -15,6 +15,11 @@ FROM build AS unittest
 WORKDIR /backend/src/Library.UnitTests
 CMD ["dotnet", "test"]
 
+# Integration Test
+FROM build AS integrationtest
+WORKDIR /backend/tests/Library.IntegrationTests
+CMD ["dotnet", "test"]
+
 # Build runtime image
 FROM build AS publish
 

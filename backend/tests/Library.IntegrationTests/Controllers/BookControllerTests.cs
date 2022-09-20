@@ -30,7 +30,7 @@ public class BookControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
 
         //Assert
         books.Should().NotBeNull();
-        books.Should().HaveCount(4, "Because are all not lent book.");
+        books.Should().HaveCount(3, "Because are all not lent book.");
     }
 
     [Fact]

@@ -2,12 +2,15 @@
 
 Simple API that aims to control the borrowing of books from a library.
 
-## Technologies implemented:
+## Implemented:
 
 - ASP.NET Core 6.0 (Migrated from ASP.NET Core 3.1 to ASP.NET Core 6.0)
 - Entity Framework Core
 - MediatR
 - Swagger
+- Unit tests
+- Integration tests (EF Core In Memory Database)
+- Docker
 
 Features available for access:
 - [List of Students](#list-of-students)
@@ -30,8 +33,15 @@ This command will run the site on url "https://localhost:5001" and the database 
 
 ## Run the tests
 
+Unit Tests:
+
 ```
 dotnet test ./backend/src/Library.UnitTests/Library.UnitTests.csproj
+```
+Integration Tests:
+
+```
+dotnet test ./backend/tests/Library.IntegrationTests/Library.IntegrationTests.csproj
 ```
 ## Docker Usage
 
@@ -43,7 +53,7 @@ url: `http://localhost:5000`
 
 swagger url: `http://localhost:5000/api/swagger/index.html`
 
-## Docker Run the tests
+## Docker Run the Unit tests
 
 ```
 docker build --target unittest -t test . 
@@ -51,6 +61,16 @@ docker build --target unittest -t test .
 
 ```
 docker run -it --rm --name unit-test test
+```
+
+## Docker Run the Integration tests
+
+```
+docker build --target integrationtests -t test . 
+```
+
+```
+docker run -it --rm --name integration-tests test
 ```
 ## REST API
 

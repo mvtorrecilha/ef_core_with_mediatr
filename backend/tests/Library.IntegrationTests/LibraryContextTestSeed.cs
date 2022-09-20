@@ -1,9 +1,5 @@
 ﻿using Library.Core.Models;
 using Library.Repository.Context;
-using Microsoft.Extensions.Logging;
-using Polly;
-using Polly.Retry;
-using System.Data.SqlClient;
 
 namespace Library.IntegrationTests;
 
