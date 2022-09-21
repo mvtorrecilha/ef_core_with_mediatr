@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.IoC", "src\Library.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.UnitTests", "tests\Library.UnitTests\Library.UnitTests.csproj", "{DE386D02-5BCA-422E-9A54-6FF9F21A8E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.IntegrationTests", "tests\Library.IntegrationTests\Library.IntegrationTests.csproj", "{B46CE5E6-D47B-46C2-800B-3E627A329651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.IntegrationTests", "tests\Library.IntegrationTests\Library.IntegrationTests.csproj", "{B46CE5E6-D47B-46C2-800B-3E627A329651}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DF944034-7B3C-4FF0-8080-30EDA00DF765}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0401C45B-180B-4CF1-A233-8F6AF55F2398}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{B46CE5E6-D47B-46C2-800B-3E627A329651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B46CE5E6-D47B-46C2-800B-3E627A329651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B46CE5E6-D47B-46C2-800B-3E627A329651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0401C45B-180B-4CF1-A233-8F6AF55F2398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0401C45B-180B-4CF1-A233-8F6AF55F2398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0401C45B-180B-4CF1-A233-8F6AF55F2398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0401C45B-180B-4CF1-A233-8F6AF55F2398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

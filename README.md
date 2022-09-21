@@ -10,7 +10,7 @@ Simple API that aims to control the borrowing of books from a library.
 - Swagger
 - Unit tests
 - Integration tests (EF Core In Memory Database)
-- Docker
+- Docker (Dockerfile and Docker-Compose)
 
 Features available for access:
 - [List of Students](#list-of-students)
