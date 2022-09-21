@@ -36,7 +36,7 @@ This command will run the site on url "https://localhost:5001" and the database 
 Unit Tests:
 
 ```
-dotnet test ./backend/src/Library.UnitTests/Library.UnitTests.csproj
+dotnet test ./backend/tests/Library.UnitTests/Library.UnitTests.csproj
 ```
 Integration Tests:
 
