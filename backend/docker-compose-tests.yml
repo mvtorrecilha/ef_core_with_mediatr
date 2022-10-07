@@ -1,0 +1,21 @@
+version: "3.8"
+services: 
+    library-unit-test:
+        container_name: unit-tests
+        image: ${DOCKER_REGISTRY-}libraryapi-unit-tests
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: unittest
+        volumes:
+         - ./tests-results/}:/tests
+
+    library-integration-test:
+        container_name: integration-tests
+        image: ${DOCKER_REGISTRY-}libraryapi-integration-tests
+        build:
+            context: .
+            dockerfile: Dockerfile 
+            target: integrationtest
+        volumes:
+         - ./tests-results/}:/tests

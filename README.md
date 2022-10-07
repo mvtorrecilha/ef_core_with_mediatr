@@ -43,7 +43,7 @@ Integration Tests:
 ```
 dotnet test ./backend/tests/Library.IntegrationTests/Library.IntegrationTests.csproj
 ```
-## Docker Usage
+## Docker Compose Usage
 
 ```
 docker-compose up
@@ -52,6 +52,12 @@ docker-compose up
 url: `http://localhost:5000`
 
 swagger url: `http://localhost:5000/api/swagger/index.html`
+
+## Docker Compose run unit and integration tests
+
+```
+docker-compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up --build
+```
 
 ## Docker Run the Unit tests
 
@@ -72,6 +78,7 @@ docker build --target integrationtests -t test .
 ```
 docker run -it --rm --name integration-tests test
 ```
+
 ## REST API
 
 The REST API to the example app is described below.

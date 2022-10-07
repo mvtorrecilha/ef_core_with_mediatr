@@ -1,0 +1,36 @@
+version: "3.8"
+services: 
+    library-unit-test:
+        environment:
+            - ASPNETCORE_ENVIRONMENT:Development
+        ports: 
+            - 5000:80
+        entrypoint:
+          - dotnet
+          - test
+          - --logger
+          - trx;LogFileName=/tests/library-unit-test-results.trx
+          - /p:CollectCoverage=true
+          - /p:CoverletOutputFormat=cobertura
+          - /p:CoverletOutput=/tests/
+          - /p:ExcludeByFile=**/obj/**/*.cs
+          - /p:Threshold=80
+          - /p:ThresholdType=branch
+
+    library-integration-test:
+        environment:
+            - ASPNETCORE_ENVIRONMENT:Development
+            - ConnectionStrings__DefaultConnection:Server=sqldata;Database=Library;User Id=sa;Password=Pass@word;Persist Security Info=True
+        ports: 
+            - 6000:80
+        entrypoint:
+          - dotnet
+          - test
+          - --logger
+          - trx;LogFileName=/tests/library-integration-test-results.trx
+          - /p:CollectCoverage=true
+          - /p:CoverletOutput=/tests/
+          - /p:MergeWith=/tests/coverage.json
+          - /p:CoverletOutputFormat=cobertura
+          - /p:Threshold=70
+          - /p:ThresholdType=branch
