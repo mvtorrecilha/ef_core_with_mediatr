@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="5516e8d2-a862-462c-9142-fbd53f2fc4d7" name="@7afbaccccb93 2022-10-15 20:39:37" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2022-10-15T20:39:37.4118022+00:00" queuing="2022-10-15T20:39:37.4118024+00:00" start="2022-10-15T20:39:30.5198730+00:00" finish="2022-10-15T20:39:37.4439652+00:00" />
+  <TestSettings name="default" id="7515fb0a-792a-4d7b-b08b-254e870fec4f">
+    <Deployment runDeploymentRoot="_7afbaccccb93_2022-10-15_20_39_37" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="1118b593-a240-44d9-ba66-79547ecf62c5" testId="9dfdf389-6eff-9ad2-1bd4-6bca166dafb9" testName="Library.UnitTests.BookControllerTests.GetBooks_ReturnAllBooks" computerName="7afbaccccb93" duration="00:00:00.5053010" startTime="2022-10-15T20:39:37.1179462+00:00" endTime="2022-10-15T20:39:37.1179462+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1118b593-a240-44d9-ba66-79547ecf62c5" />
+    <UnitTestResult executionId="a035dde0-0a65-4e74-9352-d85708dbcf12" testId="bf536fe3-dfe9-acf7-3a43-fa395cec9044" testName="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_StudentNotFoundByEmail_ShouldHasError" computerName="7afbaccccb93" duration="00:00:00.0056946" startTime="2022-10-15T20:39:37.1027408+00:00" endTime="2022-10-15T20:39:37.1027409+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a035dde0-0a65-4e74-9352-d85708dbcf12" />
+    <UnitTestResult executionId="3baff16c-da5d-4f19-a574-da26b28817ed" testId="c95c923d-4f70-9b74-8249-8969c4c06bf2" testName="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_BookIsLent_ShouldHasError" computerName="7afbaccccb93" duration="00:00:00.0111420" startTime="2022-10-15T20:39:37.1944560+00:00" endTime="2022-10-15T20:39:37.1944561+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3baff16c-da5d-4f19-a574-da26b28817ed" />
+    <UnitTestResult executionId="99d76a5b-ae2b-47c0-b50a-e89c007d1a3c" testId="9a4fdcf4-36a7-3c26-9095-ac5e5cb19382" testName="Library.UnitTests.BookControllerTests.PostBorrowBook_BorrowedBook_Successfully" computerName="7afbaccccb93" duration="00:00:00.0473378" startTime="2022-10-15T20:39:37.1654029+00:00" endTime="2022-10-15T20:39:37.1654030+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="99d76a5b-ae2b-47c0-b50a-e89c007d1a3c" />
+    <UnitTestResult executionId="e6586af3-1540-4be5-b66c-57d6797fcce4" testId="e2978a18-007a-c923-179a-d7bcdb03ae96" testName="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_BookDoesntBelongToStudentCourse_ShouldHasError" computerName="7afbaccccb93" duration="00:00:00.4914983" startTime="2022-10-15T20:39:37.0861510+00:00" endTime="2022-10-15T20:39:37.0861981+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e6586af3-1540-4be5-b66c-57d6797fcce4" />
+    <UnitTestResult executionId="ba137261-21ee-4979-95ef-7f312f44e0fa" testId="312eb87d-ecd5-1856-1f7e-5ee2bc4dedc0" testName="Library.UnitTests.BookControllerTests.PostBorrowBook_BookNotFound_ThrowException" computerName="7afbaccccb93" duration="00:00:00.0501903" startTime="2022-10-15T20:39:37.2163886+00:00" endTime="2022-10-15T20:39:37.2163887+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ba137261-21ee-4979-95ef-7f312f44e0fa" />
+    <UnitTestResult executionId="787eaffc-a900-4188-9e44-7bd0aec630a2" testId="8ec4aa84-08d9-a846-7496-7fde3996d2f3" testName="Library.UnitTests.Controllers.StudentControllerTests.GetStudents_ReturnAllStudents" computerName="7afbaccccb93" duration="00:00:00.5115714" startTime="2022-10-15T20:39:37.1177279+00:00" endTime="2022-10-15T20:39:37.1177283+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="787eaffc-a900-4188-9e44-7bd0aec630a2" />
+    <UnitTestResult executionId="aa6f38e8-922d-477d-9ee2-155262322a2d" testId="b873a308-84aa-a0df-897f-21144cc99811" testName="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_EmptyEmail_ShouldHasError" computerName="7afbaccccb93" duration="00:00:00.0018822" startTime="2022-10-15T20:39:37.1965462+00:00" endTime="2022-10-15T20:39:37.1965463+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa6f38e8-922d-477d-9ee2-155262322a2d" />
+    <UnitTestResult executionId="1341c007-6e23-4721-90a4-6922efc9273d" testId="aabb8f96-2e14-814c-8377-43669bd429f9" testName="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_ValidBookAndEmail_ShouldBeSuccess" computerName="7afbaccccb93" duration="00:00:00.0815786" startTime="2022-10-15T20:39:37.1829422+00:00" endTime="2022-10-15T20:39:37.1829423+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1341c007-6e23-4721-90a4-6922efc9273d" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Library.UnitTests.Controllers.StudentControllerTests.GetStudents_ReturnAllStudents" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="8ec4aa84-08d9-a846-7496-7fde3996d2f3">
+      <Execution id="787eaffc-a900-4188-9e44-7bd0aec630a2" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Controllers.StudentControllerTests" name="GetStudents_ReturnAllStudents" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_EmptyEmail_ShouldHasError" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="b873a308-84aa-a0df-897f-21144cc99811">
+      <Execution id="aa6f38e8-922d-477d-9ee2-155262322a2d" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests" name="HandleBorrowBookCommand_EmptyEmail_ShouldHasError" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_BookDoesntBelongToStudentCourse_ShouldHasError" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="e2978a18-007a-c923-179a-d7bcdb03ae96">
+      <Execution id="e6586af3-1540-4be5-b66c-57d6797fcce4" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests" name="HandleBorrowBookCommand_BookDoesntBelongToStudentCourse_ShouldHasError" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.BookControllerTests.GetBooks_ReturnAllBooks" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="9dfdf389-6eff-9ad2-1bd4-6bca166dafb9">
+      <Execution id="1118b593-a240-44d9-ba66-79547ecf62c5" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.BookControllerTests" name="GetBooks_ReturnAllBooks" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_ValidBookAndEmail_ShouldBeSuccess" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="aabb8f96-2e14-814c-8377-43669bd429f9">
+      <Execution id="1341c007-6e23-4721-90a4-6922efc9273d" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests" name="HandleBorrowBookCommand_ValidBookAndEmail_ShouldBeSuccess" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_StudentNotFoundByEmail_ShouldHasError" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="bf536fe3-dfe9-acf7-3a43-fa395cec9044">
+      <Execution id="a035dde0-0a65-4e74-9352-d85708dbcf12" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests" name="HandleBorrowBookCommand_StudentNotFoundByEmail_ShouldHasError" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.BookControllerTests.PostBorrowBook_BookNotFound_ThrowException" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="312eb87d-ecd5-1856-1f7e-5ee2bc4dedc0">
+      <Execution id="ba137261-21ee-4979-95ef-7f312f44e0fa" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.BookControllerTests" name="PostBorrowBook_BookNotFound_ThrowException" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests.HandleBorrowBookCommand_BookIsLent_ShouldHasError" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="c95c923d-4f70-9b74-8249-8969c4c06bf2">
+      <Execution id="3baff16c-da5d-4f19-a574-da26b28817ed" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.Handlers.BorrowBookCommandHandlerTests" name="HandleBorrowBookCommand_BookIsLent_ShouldHasError" />
+    </UnitTest>
+    <UnitTest name="Library.UnitTests.BookControllerTests.PostBorrowBook_BorrowedBook_Successfully" storage="/src/tests/library.unittests/bin/debug/net6.0/library.unittests.dll" id="9a4fdcf4-36a7-3c26-9095-ac5e5cb19382">
+      <Execution id="99d76a5b-ae2b-47c0-b50a-e89c007d1a3c" />
+      <TestMethod codeBase="/src/tests/Library.UnitTests/bin/Debug/net6.0/Library.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Library.UnitTests.BookControllerTests" name="PostBorrowBook_BorrowedBook_Successfully" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="9dfdf389-6eff-9ad2-1bd4-6bca166dafb9" executionId="1118b593-a240-44d9-ba66-79547ecf62c5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf536fe3-dfe9-acf7-3a43-fa395cec9044" executionId="a035dde0-0a65-4e74-9352-d85708dbcf12" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c95c923d-4f70-9b74-8249-8969c4c06bf2" executionId="3baff16c-da5d-4f19-a574-da26b28817ed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9a4fdcf4-36a7-3c26-9095-ac5e5cb19382" executionId="99d76a5b-ae2b-47c0-b50a-e89c007d1a3c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e2978a18-007a-c923-179a-d7bcdb03ae96" executionId="e6586af3-1540-4be5-b66c-57d6797fcce4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="312eb87d-ecd5-1856-1f7e-5ee2bc4dedc0" executionId="ba137261-21ee-4979-95ef-7f312f44e0fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ec4aa84-08d9-a846-7496-7fde3996d2f3" executionId="787eaffc-a900-4188-9e44-7bd0aec630a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b873a308-84aa-a0df-897f-21144cc99811" executionId="aa6f38e8-922d-477d-9ee2-155262322a2d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aabb8f96-2e14-814c-8377-43669bd429f9" executionId="1341c007-6e23-4721-90a4-6922efc9273d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="9" executed="9" passed="9" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.01] xUnit.net VSTest Adapter v2.4.0 (64-bit .NET 6.0.10)
+[xUnit.net 00:00:03.02]   Discovering: Library.UnitTests
+[xUnit.net 00:00:03.09]   Discovered:  Library.UnitTests
+[xUnit.net 00:00:03.10]   Starting:    Library.UnitTests
+[xUnit.net 00:00:03.89]   Finished:    Library.UnitTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

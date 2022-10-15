@@ -1,4 +1,4 @@
-﻿using Library.Core.Interfaces;
+﻿using Library.Domain;
 using Library.UnitTests.Mocks.Repositories;
 using Moq;
 

@@ -1,5 +1,5 @@
-﻿using Library.Core.Interfaces;
-using Library.Core.Interfaces.Repositories;
+﻿using Library.Domain;
+using Library.Domain.Repositories;
 using Library.Repository.Context;
 
 namespace Library.Repository;

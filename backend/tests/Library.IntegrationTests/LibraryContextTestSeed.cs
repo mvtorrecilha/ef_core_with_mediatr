@@ -1,4 +1,4 @@
-﻿using Library.Core.Models;
+﻿using Library.Domain.Entities;
 using Library.Repository.Context;
 
 namespace Library.IntegrationTests;

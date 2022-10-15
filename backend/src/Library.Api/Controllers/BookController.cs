@@ -1,7 +1,7 @@
 ﻿using Library.Api.ViewModels;
-using Library.Core.Commands;
-using Library.Core.Helpers;
-using Library.Core.Interfaces;
+using Library.Application.Commands;
+using Library.Domain;
+using Library.Infra.ResponseNotifier;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

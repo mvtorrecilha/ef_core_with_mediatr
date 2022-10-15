@@ -9,4 +9,4 @@ services:
         image: ${DOCKER_REGISTRY-}libraryapi
         build:
             context: .
-            dockerfile: Dockerfile  
+            dockerfile: ./src/Library.Api/Dockerfile  

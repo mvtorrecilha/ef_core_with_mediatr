@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Library.Api.Controllers;
 using Library.Api.ViewModels;
-using Library.Core.Models;
+using Library.Domain.Entities;
 using Library.UnitTests.Mocks;
 using Library.UnitTests.Mocks.Repositories;
 using Microsoft.AspNetCore.Mvc;

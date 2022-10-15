@@ -1,16 +1,16 @@
 ﻿using FluentAssertions;
+using Library.Application.Commands;
+using Library.Application.Handlers;
+using Library.Application.Notifications;
+using Library.Domain.Entities;
+using Library.Infra.ResponseNotifier;
+using Library.Infra.ResponseNotifier.Common;
 using Library.UnitTests.Mocks;
 using Library.UnitTests.Mocks.Repositories;
-using Library.Core.Commands;
-using Library.Core.Common;
-using Library.Core.Handlers;
-using Library.Core.Helpers;
-using Library.Core.Notifications;
 using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using Library.Core.Models;
 
 namespace Library.UnitTests.Handlers;
 

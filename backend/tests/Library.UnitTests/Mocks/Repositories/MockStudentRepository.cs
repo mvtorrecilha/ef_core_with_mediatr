@@ -1,5 +1,5 @@
-﻿using Library.Core.Interfaces.Repositories;
-using Library.Core.Models;
+﻿using Library.Domain.Entities;
+using Library.Domain.Repositories;
 using Moq;
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿using Library.Core.Models;
+﻿using Library.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;

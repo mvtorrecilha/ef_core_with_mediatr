@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using Library.Api.Controllers;
 using Library.Api.ViewModels;
-using Library.Core.Commands;
-using Library.Core.Common;
-using Library.Core.Helpers;
-using Library.Core.Models;
+using Library.Application.Commands;
+using Library.Domain.Entities;
+using Library.Infra.ResponseNotifier;
+using Library.Infra.ResponseNotifier.Common;
 using Library.UnitTests.Mocks;
 using Library.UnitTests.Mocks.Repositories;
 using Microsoft.AspNetCore.Mvc;

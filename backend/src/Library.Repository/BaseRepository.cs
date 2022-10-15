@@ -1,4 +1,4 @@
-﻿using Library.Core.Interfaces.Repositories;
+﻿using Library.Domain.Repositories;
 using Library.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

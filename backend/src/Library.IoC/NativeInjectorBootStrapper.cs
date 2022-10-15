@@ -1,9 +1,10 @@
-﻿using Library.Core.Commands;
-using Library.Core.Common;
-using Library.Core.Handlers;
-using Library.Core.Helpers;
-using Library.Core.Interfaces;
-using Library.Core.Interfaces.Repositories;
+﻿
+using Library.Application.Commands;
+using Library.Application.Handlers;
+using Library.Domain;
+using Library.Domain.Repositories;
+using Library.Infra.ResponseNotifier;
+using Library.Infra.ResponseNotifier.Common;
 using Library.Repository;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
