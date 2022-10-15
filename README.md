@@ -59,26 +59,6 @@ swagger url: `http://localhost:5000/api/swagger/index.html`
 docker-compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up --build
 ```
 
-## Docker Run the Unit tests
-
-```
-docker build --target unittest -t test . 
-```
-
-```
-docker run -it --rm --name unit-test test
-```
-
-## Docker Run the Integration tests
-
-```
-docker build --target integrationtests -t test . 
-```
-
-```
-docker run -it --rm --name integration-tests test
-```
-
 ## REST API
 
 The REST API to the example app is described below.
