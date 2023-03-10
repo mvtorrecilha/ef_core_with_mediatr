@@ -87,7 +87,6 @@ stages:
         pool:
           vmImage: $(VM_IMAGE_NAME)
         steps:
-          - template: templates/save-tag-to-json.yml
           - task: Bash@3
             displayName: Login to Container Registry
             inputs:
