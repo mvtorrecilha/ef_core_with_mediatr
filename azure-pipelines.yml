@@ -1,0 +1,119 @@
+pr: none
+
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+  VM_IMAGE_NAME: ubuntu-latest
+  SERVICE: library-api
+  APPNAME: office
+  IS_PR: $[startsWith(variables['Build.SourceBranchName'], 'merge')]
+  IS_MAIN: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+  BUILD_ARTIFACTSTAGINGDIRECTORY: $(System.DefaultWorkingDirectory)
+
+stages:
+  - stage: Builds
+    displayName: Build
+    jobs:
+      - job: RunningTests
+        displayName: Building container for PR
+        pool:
+          vmImage: $(VM_IMAGE_NAME)
+        steps:
+          - task: Bash@3
+            displayName: Build
+            inputs:
+              targetType: "inline"
+              script: |
+                sudo -E docker-compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml build --build library-unit-test library-integration-test
+              workingDirectory: $(Build.SourcesDirectory)/src
+              failOnStderr: false
+          - task: Bash@3
+            displayName: Running $(SERVICE) unit tests
+            inputs:
+              targetType: "inline"
+              script: |
+                sudo -E docker compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up library-unit-test --exit-code-from library-api-unit-test
+                OUT=$?
+                if [ $OUT -eq 0 ];then
+                  echo "ok"
+                else
+                  exit $OUT
+                fi
+              workingDirectory: $(Build.SourcesDirectory)/src
+          - task: Bash@3
+            displayName: Running $(SERVICE) functional tests
+            inputs:
+              targetType: "inline"
+              script: |
+                sudo -E docker compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up library-integration-test --exit-code-from library-integration-test
+                OUT=$?
+                if [ $OUT -eq 0 ];then
+                  echo "ok"
+                else
+                  exit $OUT
+                fi
+              workingDirectory: $(Build.SourcesDirectory)/src
+          - task: Bash@3
+            displayName: Copying result files
+            inputs:
+              targetType: "inline"
+              script: |
+                cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/library-integration-test-results.trx $(Build.SourcesDirectory)
+                cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/library-unit-test-results.trx $(Build.SourcesDirectory)
+                cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/coverage.cobertura.xml $(Build.SourcesDirectory)
+              workingDirectory: $(Build.SourcesDirectory)
+          - task: PublishTestResults@2
+            displayName: Publishing $(SERVICE) test results
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: "VSTest"
+              testResultsFiles: "**/*.trx"
+              failTaskOnFailedTests: true
+              publishRunAttachments: true
+          - task: PublishCodeCoverageResults@1
+            condition: succeededOrFailed()
+            displayName: Publishing $(SERVICE) code coverage
+            inputs:
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "$(System.DefaultWorkingDirectory)/coverage.cobertura.xml"
+              pathToSources: "$(System.DefaultWorkingDirectory)"
+      - job: BuildAndPushImage
+        dependsOn: RunningTests
+        condition: and(succeeded(), or(eq(variables.IS_PR, 'True'), eq(variables.IS_MAIN, 'True')))
+        displayName: Compose build and push image
+        pool:
+          vmImage: $(VM_IMAGE_NAME)
+        steps:
+          - template: templates/save-tag-to-json.yml
+          - task: Bash@3
+            displayName: Login to Container Registry
+            inputs:
+              targetType: "inline"
+              script: |
+                echo $(AZURE_ACR_PASSWORD) | docker login $(AZURE_ACR) --username $(AZURE_ACR_USERNAME) --password-stdin
+          - task: Bash@3
+            displayName: Compose build $(SERVICE)
+            inputs:
+              targetType: "inline"
+              script: |
+                sudo -E docker-compose build --build-arg "NUGET_FEED_PAT=$(System.AccessToken)" $(SERVICE)
+              workingDirectory: $(Build.SourcesDirectory)/src
+            env:
+              TAG: $(IMAGE_TAG)
+              REGISTRY: $(AZURE_ACR)/$(APPNAME)
+          - task: Bash@3
+            displayName: Compose push $(SERVICE)
+            inputs:
+              targetType: "inline"
+              script: |
+                sudo -E docker-compose push $(SERVICE)
+              workingDirectory: $(Build.SourcesDirectory)/src
+            env:
+              TAG: $(IMAGE_TAG)
+              REGISTRY: $(AZURE_ACR)/$(APPNAME)
+          - publish: $(build.artifactStagingDirectory)
+            displayName: Publish artifact
+            artifact: build-artifact
