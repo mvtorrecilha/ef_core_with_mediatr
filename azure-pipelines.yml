@@ -28,7 +28,7 @@ stages:
               targetType: "inline"
               script: |
                 sudo -E docker-compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml build --build library-unit-test library-integration-test
-              workingDirectory: $(Build.SourcesDirectory)/src
+              workingDirectory: $(Build.SourcesDirectory)/backend/src
               failOnStderr: false
           - task: Bash@3
             displayName: Running $(SERVICE) unit tests
@@ -42,7 +42,7 @@ stages:
                 else
                   exit $OUT
                 fi
-              workingDirectory: $(Build.SourcesDirectory)/src
+              workingDirectory: $(Build.SourcesDirectory)/backend/src
           - task: Bash@3
             displayName: Running $(SERVICE) functional tests
             inputs:
@@ -55,7 +55,7 @@ stages:
                 else
                   exit $OUT
                 fi
-              workingDirectory: $(Build.SourcesDirectory)/src
+              workingDirectory: $(Build.SourcesDirectory)/backend/src
           - task: Bash@3
             displayName: Copying result files
             inputs:
@@ -99,7 +99,7 @@ stages:
               targetType: "inline"
               script: |
                 sudo -E docker-compose build --build-arg "NUGET_FEED_PAT=$(System.AccessToken)" $(SERVICE)
-              workingDirectory: $(Build.SourcesDirectory)/src
+              workingDirectory: $(Build.SourcesDirectory)/backend/src
             env:
               TAG: $(IMAGE_TAG)
               REGISTRY: $(AZURE_ACR)/$(APPNAME)
@@ -109,7 +109,7 @@ stages:
               targetType: "inline"
               script: |
                 sudo -E docker-compose push $(SERVICE)
-              workingDirectory: $(Build.SourcesDirectory)/src
+              workingDirectory: $(Build.SourcesDirectory)/backend/src
             env:
               TAG: $(IMAGE_TAG)
               REGISTRY: $(AZURE_ACR)/$(APPNAME)
