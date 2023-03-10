@@ -64,7 +64,7 @@ stages:
                 cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/library-integration-test-results.trx $(Build.SourcesDirectory)
                 cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/library-unit-test-results.trx $(Build.SourcesDirectory)
                 cp -n $BUILD_ARTIFACTSTAGINGDIRECTORY/coverage.cobertura.xml $(Build.SourcesDirectory)
-              workingDirectory: $(Build.SourcesDirectory)
+              workingDirectory: $(Build.SourcesDirectory)/backend
           - task: PublishTestResults@2
             displayName: Publishing $(SERVICE) test results
             condition: succeededOrFailed()
