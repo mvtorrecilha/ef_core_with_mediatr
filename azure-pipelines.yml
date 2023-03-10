@@ -35,7 +35,7 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                sudo -E docker compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up library-unit-test --exit-code-from library-api-unit-test
+                sudo -E docker compose -f docker-compose-tests.yml -f docker-compose-tests.override.yml up library-unit-test --exit-code-from library-unit-test
                 OUT=$?
                 if [ $OUT -eq 0 ];then
                   echo "ok"
