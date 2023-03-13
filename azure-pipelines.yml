@@ -61,9 +61,9 @@ stages:
             inputs:
               targetType: "inline"
               script: |
-                cp -n $(System.DefaultWorkingDirectory)/library-integration-test-results.trx $(Build.SourcesDirectory)
-                cp -n $(System.DefaultWorkingDirectory)/library-unit-test-results.trx $(Build.SourcesDirectory)
-                cp -n $(System.DefaultWorkingDirectory)/coverage.cobertura.xml $(Build.SourcesDirectory)
+                cp -n $(Build.ArtifactStagingDirectory)/library-integration-test-results.trx $(Build.SourcesDirectory)
+                cp -n $(Build.ArtifactStagingDirectory)/library-unit-test-results.trx $(Build.SourcesDirectory)
+                cp -n $(Build.ArtifactStagingDirectory)/coverage.cobertura.xml $(Build.SourcesDirectory)
               workingDirectory: $(Build.SourcesDirectory)/backend
           - task: PublishTestResults@2
             displayName: Publishing $(SERVICE) test results
